@@ -1,0 +1,22 @@
+{% extends 'asgichatapp/base.html' %}
+{% load static %}
+
+{%block title%}login{% endblock %}
+
+{% block content %}
+    <h1>login page</h1>
+    <form class="row g-3" method="post">
+        {% csrf_token %}
+        <div class="col-auto">
+          <label for="staticName" class="visually-hidden">Enter your name: </label>
+          <input type="text" readonly class="form-control-plaintext" id="staticName" value="Enter your name:">
+        </div>
+        <div class="col-auto">
+          <label for="inputName" class="visually-hidden">name</label>
+          <input type="text" class="form-control" id="inputName" name="name" placeholder="name">
+        </div>
+        <div class="col-auto">
+          <button type="submit" class="btn btn-primary mb-3">Submit</button>
+        </div>
+      </form>
+{% endblock %}
