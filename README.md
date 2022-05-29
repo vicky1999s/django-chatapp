@@ -7,4 +7,5 @@ Ensure you have python 3.6+ installed
 ```
 cd django-chatapp
 pip install -r requirements.txt
+python manage.py runserver
 ```
