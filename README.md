@@ -2,6 +2,8 @@
 
 A single room chat application using django, django channels and websockets
 
+
+## Running the server
 Ensure you have python 3.6+ installed
 
 ```
