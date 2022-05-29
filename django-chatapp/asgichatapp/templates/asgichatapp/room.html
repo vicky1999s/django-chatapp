@@ -1,0 +1,94 @@
+{% extends 'asgichatapp/base.html' %}
+{% load static %}
+
+{% block content %}
+        <div id="flex-container">
+                <div id="room-header">
+                        <p id="room">Chat Room</p>
+                </div>
+                <div class="text-area" id="chat-log">
+                        <input type="text" id="message-input" name="messages">
+                        <button type="submit" id="message-button">send</button>
+                </div>   
+
+                
+
+        </div>
+        <p class="myname">{{ username }}</p>
+        
+        
+
+        <script>
+                var username = `{{ username }}`;
+                var createMessage = function(msg, user){
+                        var timeobj = new Date();
+                        var addZero = (i)=>{
+                                if(i<10)
+                                        i="0"+i;
+                                return i;
+                        }
+                time =  addZero(timeobj.getHours())+"."+addZero(timeobj.getMinutes());    
+                        
+                var area = document.getElementById("chat-log");
+                var p = document.createElement("p");
+
+                if(username===user){
+                        p.className = "curr-user";
+                        console.log("sameuser");
+                }else{
+                        p.className = "other-user";
+                }
+
+                var myname = document.createElement("span");
+                myname.className = "name-field";
+                var span = document.createElement("span");
+                span.className = "message-field";
+                var timetag = document.createElement("span");
+                timetag.className = "time-field"
+                myname.append(user + ": ");
+                span.append(msg);
+                timetag.append(time);
+                p.appendChild(myname);
+                p.appendChild(span);
+                p.appendChild(timetag);
+                area.appendChild(p);
+                };
+        
+                
+                console.log(username)
+                const url = `ws://${window.location.host}/ws/socket-server/`;
+                chatSocket = new WebSocket(url);
+                chatSocket.onmessage = function(e){
+                        let data = JSON.parse(e.data);
+                        if (data["type"] === 'chat'){
+                                // console.log(data["message"])
+                                createMessage(data["message"], data["username"]);
+                        //msg.insertAdjacentHTML('afterend', `<div><p>${data["message"]}</p></div>`);
+                        }
+                }
+
+                chatSocket.onclose = function(e){
+                        console.error("chat socket closed unexpectedly");
+                }
+
+                
+
+                document.querySelector("#message-button").addEventListener("click", (e)=>{
+                        const msgDom = document.querySelector("#message-input");
+                        const msg = msgDom.value;
+                        console.log(msg);
+                        chatSocket.send(JSON.stringify({
+                                'message': msg,
+                                'username':username,
+                        }))
+                        msgDom.value = '';
+                })
+
+                //document.querySelector('#message-input').focus();
+                document.querySelector('#message-input').onkeyup = function(e) {
+                if (e.keyCode === 13) {  // enter, return      
+                        document.querySelector('#message-button').click();
+                }
+                };
+        </script>
+{% endblock %}
