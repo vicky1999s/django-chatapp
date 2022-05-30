@@ -58,20 +58,33 @@
                 console.log(username)
                 const url = `ws://${window.location.host}/ws/socket-server/`;
                 chatSocket = new WebSocket(url);
+
+                chatSocket.onopen = function(e){
+                        chatSocket.send(JSON.stringify({
+                                'message': "JOINED THE CHAT",
+                                'username':username,
+                        }))
+                };
+
                 chatSocket.onmessage = function(e){
                         let data = JSON.parse(e.data);
                         if (data["type"] === 'chat'){
                                 // console.log(data["message"])
                                 createMessage(data["message"], data["username"]);
-                        //msg.insertAdjacentHTML('afterend', `<div><p>${data["message"]}</p></div>`);
                         }
-                }
+                };
+
+        
 
                 chatSocket.onclose = function(e){
+                        alert("chat room disconnected");
+                        chatSocket.send(JSON.stringify({
+                                'message': "LEFT THE CHAT",
+                                'username':username,
+                        }))
                         console.error("chat socket closed unexpectedly");
-                }
+                };
 
-                
 
                 document.querySelector("#message-button").addEventListener("click", (e)=>{
                         const msgDom = document.querySelector("#message-input");
@@ -82,7 +95,7 @@
                                 'username':username,
                         }))
                         msgDom.value = '';
-                })
+                });
 
                 //document.querySelector('#message-input').focus();
                 document.querySelector('#message-input').onkeyup = function(e) {

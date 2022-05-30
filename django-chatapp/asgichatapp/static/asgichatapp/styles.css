@@ -1,7 +1,4 @@
 body{
-    /* background-image: url('../../../media/chat-background.webp'); */
-    /* background-repeat: no-repeat;
-    background-size: cover; */
     background-color: black;
 }
 
@@ -13,26 +10,25 @@ body{
 
 .login-form form {
     margin-bottom: 15px;
-    
     background: #4c9a94;
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
     padding: 30px;
 }
 
 .login-form h2 {
-    margin: 0 0 15px;
+    margin: 15px auto;
 }
 
 .form-control, .btn {
     min-height: 38px;
     border-radius: 10px;
-    margin: 10px;
+    margin: 10px auto;
 }
 
 .btn {        
     font-size: 15px;
     font-weight: bold;
-    
+    margin-left: 100px;
 } 
 
 
@@ -44,7 +40,6 @@ body{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 1px solid white;
 }
 
 .text-area > p{
@@ -74,9 +69,6 @@ body{
     position: relative;
     height: 600px;
     width: 800px;
-    /* background-image: url('../../../media/heart.jpg');
-    background-repeat: no-repeat;
-    background-size: cover; */
     background-color: rgb(39, 36, 36);
     border-radius: 20px;
     border: 10px solid yellowgreen;
@@ -87,7 +79,6 @@ body{
 #message-input, #message-button{
     padding: 5px;
     margin: 5px 5px;
-    
     color: white;
     background-color: rgb(39, 36, 36);
     border: 4px solid yellowgreen;
@@ -115,10 +106,6 @@ body{
     width: 100px;
 }
 
-.text-area > .other-user{
-    left: 0;
-}
-
 .text-area > p > .time-field{
     color: rgba(172, 168, 168, 0.847);
     font-style: normal;
@@ -135,19 +122,44 @@ body{
     font-size: 0.8rem;
 }
 
-.text-area > p > .message-field, .myname{
+.text-area > p > .message-field{
     color: white;
     font-style: normal;
     font-size: 0.8rem;
 }
 
-.text-area > .curr-user{
+.text-area > .other-user{
     position:relative;
     left: 0;
 }
 
-.text-area > .other-user{
+.text-area > .curr-user{
+    left:0;
     margin-left:auto;
 }
 
+.myname{
+    color: yellowgreen;
+    font-weight: bold;
+    margin-left: 37vw;
+}
 
+
+/*for mobiles*/
+
+@media only screen and (max-width: 600px) {
+    .text-area{
+        height: 600px;
+        width: 360px;
+        border: 5px solid yellowgreen;
+    }
+    #message-input{
+        width: 257px;
+        border: 3px solid yellowgreen;
+    }
+
+    #message-button{
+        width: 80px;
+        border: 3px solid yellowgreen;
+    }
+}

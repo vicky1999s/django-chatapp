@@ -17,11 +17,6 @@ class ChatConsumer(WebsocketConsumer):
     def receive(self, text_data=None, bytes_data=None):
         print(text_data)
         text_json_data = json.loads(text_data)
-        # if "name" in text_json_data:
-        #     name = text_json_data["name"]
-        #     msg = f"{name} has entered the chat"
-        #     print(msg)
-        # else:
         msg =  text_json_data["message"]
         name = text_json_data["username"]
         async_to_sync(self.channel_layer.group_send)(
@@ -42,3 +37,9 @@ class ChatConsumer(WebsocketConsumer):
             'message':message,
             'username':username 
         }))
+
+
+    
+    def disconnect(self, code):
+        print("disconnected")
+        return super().disconnect(code)
